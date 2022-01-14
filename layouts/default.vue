@@ -1,14 +1,7 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
-      <!--  -->
-    </v-navigation-drawer>
-    <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
+    <v-app-bar app>
       <v-toolbar-title>Weather App</v-toolbar-title>
     </v-app-bar>
     <v-main>
@@ -23,9 +16,7 @@
 export default {
   name: "DefaultLayout",
   data() {
-    return {
-      drawer: null,
-    };
+    return {};
   },
 };
 </script>
