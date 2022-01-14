@@ -1,6 +1,13 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
+  <v-row
+    justify="center"
+    align="center"
+  >
+    <v-col
+      cols="12"
+      sm="8"
+      md="6"
+    >
       <v-card class="logo py-4 d-flex justify-center">
         <NuxtLogo />
         <VuetifyLogo />
@@ -77,21 +84,7 @@
 </template>
 
 <script>
-import { ref, onMounted, useContext } from "@nuxtjs/composition-api"
-import { api } from "@nuxtjs/axios"
 export default {
-  name: 'Index',
-  setup() {
-    const { $axios } = useContext();
-    const API_KEY = '002ce871fae3c25336c2496ff340254c';
-
-    onMounted(() => {
-      $axios.post(`/data/2.5/weather?id=2172797&appid=${API_KEY}`)
-    })
-
-    return {
-      API_KEY
-    }
-  }
-}
+  name: "Index",
+};
 </script>
