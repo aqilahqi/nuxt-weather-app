@@ -1,5 +1,8 @@
 <template>
-  <h1>Hello world</h1>
+  <div>
+    <h1>Hello world</h1>
+    {{states}}
+  </div>
 </template>
 
 <script>
@@ -8,8 +11,15 @@ export default {
   data() {
     return {
       city: "London",
+      current: {},
       API_KEY: "002ce871fae3c25336c2496ff340254c",
     };
+  },
+
+  computed: {
+    states() {
+      return this.$store.state.states;
+    },
   },
 
   methods: {
