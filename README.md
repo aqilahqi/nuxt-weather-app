@@ -2,7 +2,7 @@
 
 ## Hello!
 
-Hi there! The name's Qi. Here's my assessment. Hope this meets the reqirements.
+The name's Qi. Here's my assessment. Hope this meets the reqirements.
 
 https://qi-teleport.netlify.app
 
