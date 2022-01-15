@@ -141,7 +141,7 @@
         :timeout="2000"
         v-model="error"
         absolute
-        bottom
+        top
         color="red accent-2"
       >
         {{errorMsg}}
