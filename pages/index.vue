@@ -203,20 +203,28 @@ export default {
       return moment(dd).format("h:mma");
     },
     getCurrentLocation() {
-      this.loading = true;
-      this.forecast = [];
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.getWeatherByCoords(
-          position.coords.latitude,
-          position.coords.longitude
+      if (navigator.geolocation) {
+        this.loading = true;
+        this.forecast = [];
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.getWeatherByCoords(
+              position.coords.latitude,
+              position.coords.longitude
+            );
+            this.loading = false;
+          },
+          (err) => {
+            this.loading = false;
+            this.error = true;
+            this.errorMsg =
+              err.code == 1
+                ? "You have denied location permission"
+                : err.message;
+          },
+          { timeout: 7000 }
         );
-        this.loading = false;
-      }),
-        (err) => {
-          this.loading = false;
-          this.error = true;
-          this.errorMsg = err;
-        };
+      }
     },
     getWeatherByCity() {
       this.loading = true;
