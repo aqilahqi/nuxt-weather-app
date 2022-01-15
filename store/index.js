@@ -1,9 +1,4 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-Vue.use(Vuex)
-
-const state = {
+const state = () => ({
   states: ["Johor",
     "Kedah",
     "Kelantan",
@@ -269,8 +264,19 @@ const state = {
       ]
     },
   ]
+})
+const mutations = {
+  ADD_CITY(state, payload) {
+    let s = payload.state
+    let c = payload.city
+
+    let index = state.cities.findIndex(
+      (f) => f.name === s
+    );
+    console.log(state.cities[index].list)
+    state.cities[index].list.push(c)
+  }
 }
-const mutations = {}
 const actions = {}
 const getters = {}
 

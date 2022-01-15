@@ -17,7 +17,7 @@
             @click="getCurrentLocation"
           >
             <v-icon color="light-blue lighten-4">
-              mdi-refresh
+              mdi-google-maps
             </v-icon>
           </v-btn>
         </div>
@@ -72,7 +72,14 @@
         v-model="selectedCity"
         label="City"
       ></v-select>
-      <v-row class="justify-end mt-2">
+      <p class="small-font mb-0">Or add a new city to {{selectedState}}</p>
+      <v-text-field
+        v-model="newCity"
+        append-icon="mdi-plus"
+        @click:append="addCity"
+        hide-details="auto"
+      ></v-text-field>
+      <v-row class="justify-end mt-5">
         <v-btn
           elevation="0"
           text
@@ -97,7 +104,19 @@
         v-for="(f, index) in forecast"
         :key="index"
       >
-        {{f.weather[0].main}}
+        <p class="font-semibold">{{formatDate(f.dateString)}}, {{formatDay(f.dateString)}}</p>
+        <v-row
+          class="justify-space-between"
+          v-for="(l, i) in f.list"
+          :key="i"
+        >
+          <v-col>
+            <p>{{l.weather}}</p>
+          </v-col>
+          <v-col class="text-right">
+            <p class="small-font">{{formatTime(l.dateString)}}</p>
+          </v-col>
+        </v-row>
       </div>
     </div>
 
@@ -124,10 +143,12 @@ export default {
   data() {
     return {
       city: null,
+      newCity: null,
       loading: false,
       selectedState: "Wilayah Persekutuan",
       selectedCity: "Kuala Lumpur",
       forecast: [],
+      tempDate: "",
       current: {
         id: null,
       },
@@ -136,6 +157,9 @@ export default {
   },
 
   computed: {
+    rightNow() {
+      return moment(new Date()).format("DDMMYYYYkkmmss");
+    },
     states() {
       return this.$store.state.states;
     },
@@ -150,8 +174,21 @@ export default {
   },
 
   methods: {
+    formatDay(d) {
+      let dd = new Date(d);
+      return moment(dd).format("dddd");
+    },
+    formatDate(d) {
+      let dd = new Date(d);
+      return moment(dd).format("D/MM");
+    },
+    formatTime(d) {
+      let dd = new Date(d);
+      return moment(dd).format("h:mma");
+    },
     getCurrentLocation() {
       this.loading = true;
+      this.forecast = [];
       navigator.geolocation.getCurrentPosition((position) => {
         this.getWeatherByCoords(
           position.coords.latitude,
@@ -194,8 +231,34 @@ export default {
           `/data/2.5/forecast?q=${this.selectedCity}&units=metric&appid=${this.API_KEY}`
         )
         .then((response) => {
-          console.log(response);
-          this.forecast = response.list;
+          let list = response.list;
+          this.forecast = [];
+          // console.log(this.rightNow);
+          for (let i = 0; i < list.length; i++) {
+            let newDate = moment(list[i].dt_txt).format("D/MM");
+            let now = moment(list[i].dt_txt).format("DDMMYYYYkkmmss");
+            if (now > this.rightNow) {
+              if (this.tempDate !== newDate) {
+                this.tempDate = newDate;
+                let p = {
+                  date: newDate,
+                  dateString: list[i].dt_txt,
+                  list: [],
+                };
+                this.forecast.push(p);
+              }
+              let obj = {
+                date: list[i].dt,
+                dateString: list[i].dt_txt,
+                weather: list[i].weather[0].main,
+              };
+              let index = this.forecast.findIndex(
+                (f) => f.date === this.tempDate
+              );
+              this.forecast[index].list.push(obj);
+            }
+          }
+          this.tempDate = "";
         })
         .catch((err) => {
           this.loading = false;
@@ -225,6 +288,14 @@ export default {
     },
     kelvinToCelcius(k) {
       return (k - 273.15).toFixed(0);
+    },
+    addCity() {
+      this.$store.commit("ADD_CITY", {
+        state: this.selectedState,
+        city: this.newCity,
+      });
+      this.selectedCity = this.newCity;
+      this.newCity = "";
     },
   },
 
