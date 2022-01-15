@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;600&display=swap');
+
+
+.font-thin {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 100;
+}
+
+.font-regular {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+.font-semibold {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+p {
+  @extend .font-regular
+}

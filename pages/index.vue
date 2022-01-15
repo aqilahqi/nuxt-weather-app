@@ -1,7 +1,11 @@
 <template>
   <div>
-    <h1>Hello world</h1>
-    {{states}}
+    <div
+      class="weather-current"
+      v-if="weather.id"
+    >
+      <p>{{weather.city}}</p>
+    </div>
   </div>
 </template>
 
@@ -11,7 +15,9 @@ export default {
   data() {
     return {
       city: "London",
-      current: {},
+      current: {
+        id: null,
+      },
       API_KEY: "002ce871fae3c25336c2496ff340254c",
     };
   },
@@ -19,6 +25,9 @@ export default {
   computed: {
     states() {
       return this.$store.state.states;
+    },
+    weather() {
+      return this.current;
     },
   },
 
@@ -45,7 +54,13 @@ export default {
       this.$axios
         .$get(`/data/2.5/weather?lat=${lat}&lon=${long}&appid=${this.API_KEY}`)
         .then((response) => {
-          console.log(response);
+          let res = response;
+          this.current = {
+            id: res.id,
+            city: res.name,
+            country: res.sys.country,
+            weather: res.weather,
+          };
         });
     },
   },
