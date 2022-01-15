@@ -6,8 +6,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - teleport',
-    title: 'teleport',
+    titleTemplate: 'Teleport - assessment',
+    title: 'Teleport',
     htmlAttrs: {
       lang: 'en'
     },
@@ -26,6 +26,10 @@ export default {
       {
         name: 'format-detection',
         content: 'telephone=no'
+      },
+      {
+        name: 'theme-color',
+        content: '#1b2b37'
       }
     ],
     link: [{
