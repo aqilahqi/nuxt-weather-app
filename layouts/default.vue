@@ -1,9 +1,5 @@
 <template>
-  <v-app dark>
-
-    <!-- <v-app-bar app>
-      <v-toolbar-title>Weather App</v-toolbar-title>
-    </v-app-bar> -->
+  <v-app>
     <v-main>
       <v-container>
         <Nuxt />
