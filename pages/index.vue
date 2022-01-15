@@ -79,17 +79,16 @@
         @click:append="addCity"
         hide-details="auto"
       ></v-text-field>
-      <v-row class="justify-end mt-5">
+      <v-row class="justify-end mt-10">
         <v-btn
           elevation="0"
-          text
           color="light-blue lighten-4"
           class="text-capitalize"
           @click="getWeatherByCity"
-        ><span class="font-regular">Get Weather</span>
+        ><span class="font-regular primary--text">Get Weather</span>
           <v-icon
             regular
-            color="light-blue lighten-4"
+            color="primary"
             class="ml-2"
           >
             mdi-cloud-outline
@@ -98,7 +97,10 @@
       </v-row>
     </div>
 
-    <div v-if="forecast && forecast.length > 0">
+    <div
+      class="mt-10"
+      v-if="forecast && forecast.length > 0"
+    >
       <div
         class="box"
         v-for="(f, index) in forecast"
@@ -133,6 +135,18 @@
         ></v-progress-circular>
       </div>
     </v-overlay>
+
+    <div class="text-center">
+      <v-snackbar
+        :timeout="2000"
+        v-model="error"
+        absolute
+        bottom
+        color="red accent-2"
+      >
+        {{errorMsg}}
+      </v-snackbar>
+    </div>
   </div>
 </template>
 
@@ -143,6 +157,8 @@ export default {
   data() {
     return {
       city: null,
+      error: false,
+      errorMsg: "",
       newCity: null,
       loading: false,
       selectedState: "Wilayah Persekutuan",
@@ -198,7 +214,8 @@ export default {
       }),
         (err) => {
           this.loading = false;
-          console.log(err);
+          this.error = true;
+          this.errorMsg = err;
         };
     },
     getWeatherByCity() {
@@ -222,7 +239,8 @@ export default {
         })
         .catch((err) => {
           this.loading = false;
-          console.log(err);
+          this.error = true;
+          this.errorMsg = err.response.data.message;
         });
     },
     getWeatherForecast() {
@@ -262,7 +280,8 @@ export default {
         })
         .catch((err) => {
           this.loading = false;
-          console.log(err);
+          this.error = true;
+          this.errorMsg = err.response.data.message;
         });
     },
     getWeatherByCoords(lat, long) {
@@ -283,7 +302,8 @@ export default {
         })
         .catch((err) => {
           this.loading = false;
-          console.log(err);
+          this.error = true;
+          this.errorMsg = err.response.data.message;
         });
     },
     kelvinToCelcius(k) {
