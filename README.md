@@ -1,10 +1,10 @@
-# Teleport Assessment
+# Weather App
 
-## Hello!
+A single page app to look up the current weather. Users can also search for a location and see the weather forecast.
 
-The name's Qi. Here's my assessment. Hope this meets the reqirements.
+I used `Nuxt.js` and `Vuetify`
 
-[https://qi-teleport.netlify.app](https://qi-teleport.netlify.app)
+Demo is available <a href="https://react-googlemap-autocomplete.netlify.app/">here</a>.
 
 ## Build Setup
 
