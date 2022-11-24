@@ -4,7 +4,7 @@ A single page app to look up the current weather. Users can also search for a lo
 
 I used `Nuxt.js` and `Vuetify`
 
-Demo is available <a href="https://react-googlemap-autocomplete.netlify.app/">here</a>.
+Demo is available <a href="https://aqilahqi-nuxtjs-weather-app.netlify.app/">here</a>.
 
 ## Build Setup
 
